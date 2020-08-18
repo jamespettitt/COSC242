@@ -1,0 +1,57 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
+
+#define ARRAY_SIZE 10
+
+double calculate_mean(int lines_read, double *arr){
+  double total = 0.0;
+  int count = lines_read; 
+  while(lines_read >= 0){
+    total += arr[lines_read];
+    lines_read--;
+  }
+  return total / count;
+}
+
+double calculate_var(int mean, double *arr, int lines_read){
+  int i = lines_read;
+  double total = 0.0;
+  while(lines_read >= 0){
+    total += ((mean - arr[lines_read])*(mean - arr[lines_read]));
+    lines_read--;
+  }
+  return total / i;
+}
+#
+
+int main(void){
+  double n, a, b, c;
+  double judge1 [ARRAY_SIZE];
+  double judge2 [ARRAY_SIZE];
+  double judge3 [ARRAY_SIZE];
+  int lines_read = 0;
+
+  fflush(stdout);
+  while(4 == scanf("%lg%lg%lg%lg", &n, &a, &b, &c)){
+    judge1[lines_read] = a;
+    judge2[lines_read] = b;
+    judge3[lines_read] = c;
+    lines_read++;
+  }
+
+  double mean1, mean2, mean3;
+  mean1 = calculate_mean(lines_read, judge1);
+  mean2 = calculate_mean(lines_read, judge2);
+  mean3 = calculate_mean(lines_read, judge3);
+
+  double var1, var2, var3;
+  var1 = calculate_var(mean1, judge1, lines_read);
+  var2 = calculate_var(mean2, judge2, lines_read);
+  var3 = calculate_var(mean3, judge3, lines_read);
+
+  printf("\t  Average SD:\n");
+  printf("judge1  : %5.2f %5.2f\n", mean1, sqrt(var1));
+  printf("judge2  : %5.2f %5.2f\n", mean2, sqrt(var2));
+  printf("judge3  : %5.2f %5.2f\n", mean3, sqrt(var3));
+}
